@@ -16,36 +16,26 @@ export const ItemListContainer = ({ greeting }) => {
 
 
 
-useEffect(()=>{
-const productCollection= collection(db, "items")
-const q= query(productCollection, where("categoryId", "==", "men's clothing"))
-getDocs(productCollection)
-.then (result => {
+    useEffect(() => {
 
-  const lista = result.docs.map (doc => {
-    return {
-      id: doc.id,
-      ...doc.data(),
-    }
-  })
-  setProductos(lista)
-      console.log(lista);
-    })
-    .catch(error => console.log(error))
-     .finally(() => setLoaded(false)) 
-    
-
-//   const URL = categoryId
-//   ? `https://fakestoreapi.com/products/category/${categoryId}`
-//   : "https://fakestoreapi.com/products/";
- 
-// fetch(URL)
-// .then(res => res.json())
-// .then(data => setProductos(data))
-// .catch(err => console.log(err))
-// .finally(() => setLoaded(false))
+      const q = categoryId
+          ? query(collection(db, 'items'), where('category', '==', categoryId))
+          : collection(db, 'items');
+          
+      getDocs(q)
+          .then(result => {
+              const lista = result.docs.map(doc => {
+                  return {
+                      id: doc.id,
+                      ...doc.data(),
+                  }
+              })
+              setProductos(lista);
+          })
+          .catch(err => console.log(err))
+          .finally(() => setLoaded(false))
   
-}, [categoryId]);
+  }, [categoryId]);
    
     return (
         <>

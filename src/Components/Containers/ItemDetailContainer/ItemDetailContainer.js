@@ -16,7 +16,7 @@ export const ItemDetailsContainer = () => {
 const refDoc= doc(productCollection, productId);
 getDoc(refDoc)
 .then(result=>{
-    const product={
+    const product={ 
         id:result.id,
         ...result.data(),
     }
